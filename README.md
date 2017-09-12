@@ -73,13 +73,13 @@ ON articles.author=authors.id;
 Creates an author / article popularity view using a LEFT JOIN on the previously created author_article_view and log table:
 ```
 CREATE TEMPORARY VIEW author_article_popularity_view AS
-  SELECT COUNT(log.path) AS views,
-         author_article_view.title AS article,
-         author_article_view.author AS author
-  FROM author_article_view LEFT JOIN log
-  ON log.path LIKE '%' || author_article_view.slug || '%'
-  GROUP BY article, author
-  ORDER BY views DESC;
+SELECT COUNT(log.path) AS views,
+       author_article_view.title AS article,
+       author_article_view.author AS author
+FROM author_article_view LEFT JOIN log
+ON log.path LIKE '%' || author_article_view.slug || '%'
+GROUP BY article, author
+ORDER BY views DESC;
 ```
 #### createDailyTrafficView
 Creates a daily traffic view from the log table.
