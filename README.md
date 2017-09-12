@@ -48,12 +48,12 @@ The program first creates these views, then generates reports using them.
 ```
 ...database connection logic...
 createViews
-	createAuthorArticleView
+    createAuthorArticleView
     createAuthorArticlePopularityView
     createDailyTrafficView
     createDailyErrorView
 printReports
-	printTopThreeArticles
+    printTopThreeArticles
     printTopAuthors
     printDaysWithErrors
 ```
