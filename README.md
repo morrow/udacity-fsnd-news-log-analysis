@@ -63,9 +63,9 @@ Create views to use in subsequent queries.
 Creates author / article view using a LEFT JOIN on the authors and articles table:
 ```
 CREATE TEMPORARY VIEW author_article_view AS
-SELECT authors.name as author,
-       articles.slug as slug,
-       articles.title as title
+SELECT authors.name AS author,
+       articles.slug AS slug,
+       articles.title AS title
 FROM articles LEFT JOIN authors
 ON articles.author=authors.id;
 ```
@@ -85,8 +85,8 @@ CREATE TEMPORARY VIEW author_article_popularity_view AS
 Creates a daily traffic view from the log table.
 ```
 CREATE TEMPORARY VIEW daily_traffic_view AS
-SELECT DATE(time) as day,
-       COUNT(date(time)) as views
+SELECT DATE(time) AS day,
+       COUNT(date(time)) AS views
 FROM log
 GROUP BY day;
 ```
@@ -94,8 +94,8 @@ GROUP BY day;
 Creates a daily error view from a JOIN of log and daily_traffic_view:
 ```
 CREATE TEMPORARY VIEW daily_error_view AS
-SELECT COUNT(status) as errors,
-       DATE(time) as day
+SELECT COUNT(status) AS errors,
+       DATE(time) AS day
 FROM log LEFT JOIN daily_traffic_view
 ON date(log.time)=daily_traffic_view.day
 WHERE status LIKE '4%'
@@ -117,7 +117,7 @@ LIMIT 3;
 SELECT using SUM, GROUP BY, ORDER BY on author_article_popularity_view:
 ```
 SELECT author_article_popularity_view.author,
-       SUM(author_article_popularity_view.views) as total_views
+       SUM(author_article_popularity_view.views) AS total_views
 FROM author_article_popularity_view
 GROUP BY author_article_popularity_view.author
 ORDER BY total_views DESC;

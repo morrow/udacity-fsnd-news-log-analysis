@@ -10,9 +10,9 @@ def createAuthorArticleView():
     """ Creates author / article view """
     query = """
         CREATE TEMPORARY VIEW author_article_view AS
-        SELECT authors.name as author,
-               articles.slug as slug,
-               articles.title as title
+        SELECT authors.name AS author,
+               articles.slug AS slug,
+               articles.title AS title
         FROM articles LEFT JOIN authors
         ON articles.author=authors.id;
     """
@@ -38,8 +38,8 @@ def createDailyTrafficView():
     """ Creates a daily traffic view """
     query = """
         CREATE TEMPORARY VIEW daily_traffic_view AS
-        SELECT DATE(time) as day,
-               COUNT(DATE(time)) as views
+        SELECT DATE(time) AS day,
+               COUNT(DATE(time)) AS views
         FROM log
         GROUP BY day;
     """
@@ -50,8 +50,8 @@ def createDailyErrorView():
     """ creates a daily error view """
     query = """
         CREATE TEMPORARY VIEW daily_error_view AS
-        SELECT COUNT(status) as errors,
-               DATE(time) as day
+        SELECT COUNT(status) AS errors,
+               DATE(time) AS day
         FROM log LEFT JOIN daily_traffic_view
         ON DATE(log.time)=daily_traffic_view.day
         WHERE status LIKE '4%'
@@ -92,7 +92,7 @@ def printTopAuthors():
     """ Print the most popular article authors of all time """
     query = """
         SELECT author_article_popularity_view.author,
-               SUM(author_article_popularity_view.views) as total_views
+               SUM(author_article_popularity_view.views) AS total_views
         FROM author_article_popularity_view
         GROUP BY author_article_popularity_view.author
         ORDER BY total_views DESC;
@@ -151,6 +151,6 @@ if __name__ == "__main__":
         # create views and print reports
         createViews()
         printReports()
-    except psycopg2.Error as e:
+    except psycopg2.Error AS e:
         # error when connecting
         print("Unable to connect: \n{}".format(e))
